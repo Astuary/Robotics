@@ -1,0 +1,66 @@
+STEPS FOR COMPILING THE SIMULATOR
+
+0. You may need certain packages before installation. The neccessary packages on 
+   a fresh installation of Ubuntu 18.04 can be obtained by running:
+   “sudo apt-get install make gcc libx11-dev libxt-dev libxmu-dev libxaw7-dev”
+
+1. Unzip roger.zip 
+
+2. Go to RogerSimulator. run make clean; make
+
+3. Go to RogerClient run make clean; make
+
+4. Copy the generated libraries to RogerProjects. In the RogerProjects
+   Directory, run:
+       cp ../RogerSimulator/lib/dynamics.a lib/
+       cp ../RogerClient/lib/SocketComm.a lib/
+
+The above steps need to be done only once.
+
+5. Compile RogerProjects by running make clean; make
+This will generate an executable named roger
+
+
+STEPS FOR RUNNING THE SIMULATOR
+
+1. Open a terminal window for executing the simulator and another for
+   each of the Rogers you will run (up to two for now).
+2. In the first window, change the current directory to RogerSimulator.
+   In the other windows, change the directory to the corresponding
+   RogerProjects directory for your Rogers.
+3. In the first window run: 
+	“./simulator EnvironmentNum NRobots optGameRules”, where:
+	   EnvironmentNum is an integer that defines the simulator GUI
+		EnvironmentNum = 0 : ARENA
+		EnvironmentNum = 1 : DEVELOPMENT
+		
+	   NRobots is an integer that tells the simulator how many
+         	Rogers you want to connect
+
+	   optGameRules is an optional argument that asks the
+ 		simulator to implement some rules for playing a
+		game. All we have so far is (0: PONG), if this
+		argument is omitted, Roger is a “free range” crab.
+
+   This command starts up the simulator, however, it will not display
+   until it has connection from “NRobots” different Rogers.
+
+   Port numbers start from 8000 for the first player and increment by
+   1 for each new player.
+4. In the second window run: 
+	”./roger 127.0.0.1 8000”     to connect the first Roger
+   For PONG, this robot will appear on the left.
+5. Repeat step 4 in the other terminal windows with consecutive port
+   numbers NRobots times, i.e.: 
+	“./roger 127.0.0.1 8001”     to connect a second Roger
+   For PONG, this robot will appear on the right.
+   
+   when you’ve done this NRobots (only up to two so far) times, the
+   simulator will display.
+
+FOR EXAMPLE:
+	term #1: “./simulator 0 2 0” 
+	term #2: “./roger 127.0.0.1 8000” 
+        term #3: “./roger 127.0.0.1 8001”
+   should launch a 2-Roger ARENA that plays PONG
+
